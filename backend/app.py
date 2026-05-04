@@ -1,3 +1,18 @@
+"""
+IPC Simulator and Visualizer
+
+This backend simulates various Inter-Process Communication (IPC) mechanisms:
+- Pipe
+- Message Queue
+- Shared Memory
+- Semaphore
+- Producer-Consumer
+
+It provides REST APIs for frontend visualization and debugging of IPC concepts.
+"""
+
+
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
