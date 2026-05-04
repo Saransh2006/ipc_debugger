@@ -1,3 +1,4 @@
 __pycache__/
 *.pyc
-.envgit remote add origin https://github.com/yourusername/ipc-debugger.git
+.env
+node_modules/
