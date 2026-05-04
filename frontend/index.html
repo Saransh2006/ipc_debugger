@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IPC Visualizer — Inter-Process Communication Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-canvas">
+    <div class="grid-overlay"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="particle-field" id="particleField"></div>
+    <div class="scanline"></div>
+  </div>
+
+  <!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">IPC</span>
+        <span class="logo-sub">Visualizer</span>
+        <span class="logo-bracket">]</span>
+        <span class="logo-cursor">▮</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#concepts" class="nav-link">Concepts</a></li>
+        <li><a href="#simulations" class="nav-link">Simulations</a></li>
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#team" class="nav-link">Team</a></li>
+      </ul>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span class="status-text">SYS:ONLINE</span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        IPC
+      </div>
+      <h1 class="hero-title">
+        <span class="line-1">Inter-Process</span>
+        <span class="line-2">Communication</span>
+        <span class="line-3 accent-text">Simulator <span class="blink-cursor">_</span></span>
+      </h1>
+      <p class="hero-desc">
+        A real-time, interactive visualizer for core IPC mechanisms studied in Operating Systems.
+        Watch data flow between processes — from <em>pipes</em> and <em>shared memory</em>
+        to <em>semaphores</em> and <em>sockets</em> — rendered live in your browser.
+      </p>
+      <div class="hero-cta">
+        <a href="#simulations" class="btn btn-primary">
+          <span class="btn-icon">⚡</span> Explore Simulations
+        </a>
+        <a href="#concepts" class="btn btn-ghost">
+          <span class="btn-icon">📖</span> Learn IPC
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">5</span><span class="stat-label">IPC Methods</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">4</span><span class="stat-label">Live Simulations</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Process Flows</span></div>
+      </div>
+    </div>
+
+    <!-- Floating process nodes -->
+    <div class="hero-visual">
+      <div class="float-node node-a">
+        <div class="node-ring"></div>
+        <span>PID:001</span>
+        <small>Process A</small>
+      </div>
+      <div class="ipc-arrow">
+        <svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#00f5c4"/>
+            </marker>
+          </defs>
+          <line x1="0" y1="20" x2="185" y2="20" stroke="#00f5c4" stroke-width="2"
+                stroke-dasharray="6,4" marker-end="url(#ah)" class="flow-line"/>
+          <text x="85" y="14" fill="#00f5c4" font-size="9" font-family="Space Mono" text-anchor="middle">IPC CHANNEL</text>
+        </svg>
+      </div>
+      <div class="float-node node-b">
+        <div class="node-ring"></div>
+        <span>PID:002</span>
+        <small>Process B</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CONCEPTS ═══════════════════════════ -->
+  <section class="concepts" id="concepts">
+    <div class="section-inner">
+      <div class="section-label">// CORE MECHANISMS</div>
+      <h2 class="section-title">IPC <span class="accent">Concepts</span></h2>
+      <p class="section-sub">Five fundamental IPC mechanisms every OS student must master</p>
+
+      <div class="concepts-grid">
+
+        <div class="concept-card" data-index="0">
+          <div class="card-glow"></div>
+          <div class="card-icon">🔧</div>
+          <div class="card-tag">POSIX · Unix</div>
+          <h3>Pipes</h3>
+          <p>Unidirectional data channels connecting two processes. Named pipes (FIFOs) extend this to unrelated processes, enabling linear producer-consumer flows with kernel-buffered I/O.</p>
+          <div class="card-footer">
+            <span class="card-meta">Complexity: <em class="lvl-low">Low</em></span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="concept-card" data-index="1">
+          <div class="card-glow"></div>
+          <div class="card-icon">📬</div>
+          <div class="card-tag">POSIX · SysV</div>
+          <h3>Message Queues</h3>
+          <p>Kernel-maintained queues that store typed messages. Processes send and receive discrete message blocks asynchronously, decoupling producers from consumers with priority support.</p>
+          <div class="card-footer">
+            <span class="card-meta">Complexity: <em class="lvl-med">Medium</em></span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="concept-card" data-index="2">
+          <div class="card-glow"></div>
+          <div class="card-icon">💾</div>
+          <div class="card-tag">mmap · SysV</div>
+          <h3>Shared Memory</h3>
+          <p>The fastest IPC mechanism — a memory region mapped into multiple process address spaces. Requires explicit synchronization (semaphores/mutexes) to prevent race conditions and data corruption.</p>
+          <div class="card-footer">
+            <span class="card-meta">Complexity: <em class="lvl-high">High</em></span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="concept-card" data-index="3">
+          <div class="card-glow"></div>
+          <div class="card-icon">🔒</div>
+          <div class="card-tag">Dijkstra · POSIX</div>
+          <h3>Semaphores</h3>
+          <p>Integer-valued signaling primitives using atomic wait() and signal() (P/V) operations. Binary semaphores act as mutexes; counting semaphores manage finite resource pools across processes.</p>
+          <div class="card-footer">
+            <span class="card-meta">Complexity: <em class="lvl-med">Medium</em></span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="concept-card" data-index="4">
+          <div class="card-glow"></div>
+          <div class="card-icon">🌐</div>
+          <div class="card-tag">BSD · POSIX</div>
+          <h3>Sockets</h3>
+          <p>Bidirectional endpoints enabling IPC both locally (Unix domain sockets) and across networks (TCP/UDP). The foundation of all networked applications and inter-host process communication.</p>
+          <div class="card-footer">
+            <span class="card-meta">Complexity: <em class="lvl-high">High</em></span>
+            <span class="card-arrow">→</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SIMULATIONS ═══════════════════════════ -->
+  <section class="simulations" id="simulations">
+    <div class="section-inner">
+      <div class="section-label">// INTERACTIVE DEMO</div>
+      <h2 class="section-title">Simulation <span class="accent">Dashboard</span></h2>
+      <p class="section-sub">Select an IPC mechanism and send data between Process A and Process B</p>
+
+      <div class="sim-dashboard">
+
+        <!-- Tab Bar -->
+        <div class="sim-tabs">
+          <button class="sim-tab active" data-tab="pipe">
+            <span class="tab-icon">🔧</span> Pipe
+          </button>
+          <button class="sim-tab" data-tab="shm">
+            <span class="tab-icon">💾</span> Shared Memory
+          </button>
+          <button class="sim-tab" data-tab="mq">
+            <span class="tab-icon">📬</span> Message Queue
+          </button>
+          <button class="sim-tab" data-tab="sem">
+            <span class="tab-icon">🔒</span> Semaphore
+          </button>
+        </div>
+
+        <!-- Dashboard Body -->
+        <div class="sim-body">
+
+          <!-- Process Arena -->
+          <div class="process-arena">
+
+            <div class="process-box" id="procA">
+              <div class="proc-header">
+                <span class="proc-indicator"></span>
+                <span class="proc-label">Process A</span>
+                <span class="proc-pid">PID: 1042</span>
+              </div>
+              <div class="proc-body">
+                <div class="proc-state" id="procAState">IDLE</div>
+                <div class="proc-memory">
+                  <div class="mem-bar"><div class="mem-fill" id="memFillA" style="width:30%"></div></div>
+                  <span class="mem-label">MEM: 30%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Channel Visualizer -->
+            <div class="channel-vis" id="channelVis">
+              <div class="channel-label" id="channelLabel">PIPE CHANNEL</div>
+              <div class="channel-track">
+                <div class="channel-packet" id="channelPacket"></div>
+              </div>
+              <div class="channel-arrows">
+                <svg width="100%" height="60" viewBox="0 0 300 60" preserveAspectRatio="none">
+                  <defs>
+                    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                      <polygon points="0 0, 8 3, 0 6" fill="#00f5c4"/>
+                    </marker>
+                  </defs>
+                  <line x1="10" y1="30" x2="280" y2="30" stroke="#00f5c4" stroke-width="1.5"
+                        stroke-dasharray="8,5" marker-end="url(#arr)" opacity="0.6"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="process-box" id="procB">
+              <div class="proc-header">
+                <span class="proc-indicator"></span>
+                <span class="proc-label">Process B</span>
+                <span class="proc-pid">PID: 1043</span>
+              </div>
+              <div class="proc-body">
+                <div class="proc-state" id="procBState">WAITING</div>
+                <div class="proc-memory">
+                  <div class="mem-bar"><div class="mem-fill" id="memFillB" style="width:15%"></div></div>
+                  <span class="mem-label">MEM: 15%</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /process-arena -->
+
+          <!-- Control Panel -->
+          <div class="control-panel">
+
+            <div class="tab-content active" id="tab-pipe">
+              <div class="ctrl-title">🔧 Pipe Simulation</div>
+              <div class="ctrl-desc" id="sim-description">Sends data through a kernel pipe buffer from Process A to Process B. Unidirectional, FIFO ordering.</div>
+              <div class="ctrl-form">
+                <div class="form-row">
+                  <label>Message Payload</label>
+                  <input type="text" id="pipeMsg" placeholder="Hello from Process A..." class="ctrl-input"/>
+                </div>
+                <div class="form-row">
+                  <label>Buffer Size (bytes)</label>
+                  <input type="number" id="pipeBuf" value="64" min="8" max="4096" class="ctrl-input"/>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-send" onclick="runSimulation('pipe')">
+                    <span class="btn-spinner" id="spin-pipe"></span>
+                    Send via Pipe
+                  </button>
+                  <button class="btn btn-clear" onclick="clearOutput()">Clear</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-shm">
+              <div class="ctrl-title">💾 Shared Memory</div>
+              <div class="ctrl-desc">Writes data to a shared memory segment. Both processes access the same physical memory region via virtual address mapping.</div>
+              <div class="ctrl-form">
+                <div class="form-row">
+                  <label>Write to Shared Segment</label>
+                  <input type="text" id="shmMsg" placeholder="Shared data payload..." class="ctrl-input"/>
+                </div>
+                <div class="form-row">
+                  <label>Segment Key (hex)</label>
+                  <input type="text" id="shmKey" value="0x1A2B" class="ctrl-input"/>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-send" onclick="runSimulation('shm')">
+                    <span class="btn-spinner" id="spin-shm"></span>
+                    Write to Shared Mem
+                  </button>
+                  <button class="btn btn-clear" onclick="clearOutput()">Clear</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-mq">
+              <div class="ctrl-title">📬 Message Queue</div>
+              <div class="ctrl-desc">Enqueues a typed message into the kernel message queue. Process B dequeues based on message type priority.</div>
+              <div class="ctrl-form">
+                <div class="form-row">
+                  <label>Message Body</label>
+                  <input type="text" id="mqMsg" placeholder="Queue message content..." class="ctrl-input"/>
+                </div>
+                <div class="form-row">
+                  <label>Message Type (priority)</label>
+                  <input type="number" id="mqType" value="1" min="1" max="10" class="ctrl-input"/>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-send" onclick="runSimulation('mq')">
+                    <span class="btn-spinner" id="spin-mq"></span>
+                    Enqueue Message
+                  </button>
+                  <button class="btn btn-clear" onclick="clearOutput()">Clear</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-sem">
+              <div class="ctrl-title">🔒 Semaphore Demo</div>
+              <div class="ctrl-desc">Demonstrates P (wait) and V (signal) operations on a counting semaphore, controlling access to the critical section.</div>
+              <div class="ctrl-form">
+                <div class="form-row">
+                  <label>Initial Semaphore Value</label>
+                  <input type="number" id="semVal" value="1" min="0" max="5" class="ctrl-input"/>
+                </div>
+                <div class="form-row">
+                  <label>Operation</label>
+                  <select id="semOp" class="ctrl-input ctrl-select">
+                    <option value="wait">P / wait() — decrement</option>
+                    <option value="signal">V / signal() — increment</option>
+                  </select>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-send" onclick="runSimulation('sem')">
+                    <span class="btn-spinner" id="spin-sem"></span>
+                    Execute Operation
+                  </button>
+                  <button class="btn btn-clear" onclick="clearOutput()">Clear</button>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /control-panel -->
+
+        </div><!-- /sim-body -->
+
+        <!-- Terminal Output -->
+        <div class="terminal">
+          <div class="term-header">
+            <div class="term-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="term-title">ipc-simulator — output console</span>
+            <span class="term-time" id="termTime"></span>
+          </div>
+          <div class="term-body" id="termBody">
+            <div class="term-line">
+              <span class="term-prompt">root@ipc-sim:~$</span>
+              <span class="term-cmd"> ./ipc_visualizer --interactive</span>
+            </div>
+            <div class="term-line term-info">System initialized. Select a simulation and click Send.</div>
+            <div class="term-line term-dim">Kernel version: 6.5.0-generic · POSIX IPC · SysV IPC enabled</div>
+            <div class="term-cursor-line"><span class="term-prompt">root@ipc-sim:~$</span><span class="term-blink"> ▮</span></div>
+          </div>
+        </div>
+
+      </div><!-- /sim-dashboard -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FEATURES ═══════════════════════════ -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-label">// WHY USE THIS</div>
+      <h2 class="section-title">Project <span class="accent">Features</span></h2>
+
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon-wrap">
+            <div class="feat-icon">📡</div>
+          </div>
+          <h3>Real-Time Visualization</h3>
+          <p>Watch data packets animate across process boundaries with live state transitions and memory usage indicators updating in real-time.</p>
+          <div class="feat-tag">Live · Animated</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap">
+            <div class="feat-icon">🎓</div>
+          </div>
+          <h3>Easy Learning</h3>
+          <p>Abstract OS concepts become tangible through visual metaphors. Understand pipe buffering, semaphore counting, and shared memory mapping intuitively.</p>
+          <div class="feat-tag">Educational · Intuitive</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap">
+            <div class="feat-icon">🧪</div>
+          </div>
+          <h3>Interactive Simulations</h3>
+          <p>Configure buffer sizes, message types, semaphore values, and segment keys. Experiment with different parameters and observe behavioral changes.</p>
+          <div class="feat-tag">Configurable · Hands-on</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon-wrap">
+            <div class="feat-icon">💡</div>
+          </div>
+          <h3>OS Concept Clarity</h3>
+          <p>Aligned with POSIX standards and textbook theory. Each simulation mirrors actual syscalls: pipe(), mmap(), msgget(), sem_open() and socket().</p>
+          <div class="feat-tag">POSIX · Standards-based</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ WORKFLOW ═══════════════════════════ -->
+  <section class="workflow" id="workflow">
+    <div class="section-inner">
+      <div class="section-label">// HOW IT WORKS</div>
+      <h2 class="section-title">IPC <span class="accent">Workflow</span></h2>
+      <p class="section-sub">Every IPC mechanism follows this five-step execution model</p>
+
+      <div class="workflow-track">
+        <div class="wf-line"></div>
+        <div class="wf-steps">
+
+          <div class="wf-step">
+            <div class="wf-num">01</div>
+            <div class="wf-dot"><span>⚙️</span></div>
+            <div class="wf-content">
+              <h4>Create Process</h4>
+              <p>fork() spawns child process. OS allocates PCB, virtual address space, and file descriptor table.</p>
+              <code>pid = fork()</code>
+            </div>
+          </div>
+
+          <div class="wf-step">
+            <div class="wf-num">02</div>
+            <div class="wf-dot"><span>📤</span></div>
+            <div class="wf-content">
+              <h4>Send Data</h4>
+              <p>Process A writes to the IPC channel using the mechanism's write/send/msgsnd API call.</p>
+              <code>write(fd, buf, n)</code>
+            </div>
+          </div>
+
+          <div class="wf-step">
+            <div class="wf-num">03</div>
+            <div class="wf-dot"><span>🔄</span></div>
+            <div class="wf-content">
+              <h4>Synchronize</h4>
+              <p>Semaphores or mutexes enforce mutual exclusion where required. Critical section is protected.</p>
+              <code>sem_wait(&sem)</code>
+            </div>
+          </div>
+
+          <div class="wf-step">
+            <div class="wf-num">04</div>
+            <div class="wf-dot"><span>📥</span></div>
+            <div class="wf-content">
+              <h4>Receive Response</h4>
+              <p>Process B reads from the channel. Kernel handles data transfer, blocking if data unavailable.</p>
+              <code>read(fd, buf, n)</code>
+            </div>
+          </div>
+
+          <div class="wf-step">
+            <div class="wf-num">05</div>
+            <div class="wf-dot"><span>🖥️</span></div>
+            <div class="wf-content">
+              <h4>Display Output</h4>
+              <p>Simulator renders the result — data received, semaphore state, memory segment value — in the console.</p>
+              <code>printf(output)</code>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ TEAM / FOOTER ═══════════════════════════ -->
+  <section class="team" id="team">
+    <div class="section-inner">
+      <div class="section-label">// PROJECT DETAILS</div>
+      <h2 class="section-title">Our <span class="accent">Team</span></h2>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">
+            <div class="avatar-ring"></div>
+            <span class="avatar-initials">ST</span>
+          </div>
+          <div class="team-info">
+            <div class="team-name">Maulika Thukral</div>
+            <div class="team-roll">Reg No: 12410273</div>
+            <div class="team-role">Developer · Designer</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">
+            <div class="avatar-ring"></div>
+            <span class="avatar-initials">ST</span>
+          </div>
+          <div class="team-info">
+            <div class="team-name">Saransh  Mangal</div>
+            <div class="team-roll">Roll No: 12409054</div>
+            <div class="team-role">Developer · Presenter</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">
+            <div class="avatar-ring"></div>
+            <span class="avatar-initials">ST</span>
+          </div>
+          <div class="team-info">
+            <div class="team-name">Student Name</div>
+            <div class="team-roll">Roll No: XXXXXX</div>
+            <div class="team-role">Research · Documentation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-meta">
+        <div class="meta-item"><span class="meta-key">PROJECT</span><span class="meta-val">IPC Simulator & Visualizer</span></div>
+        <div class="meta-item"><span class="meta-key">SUBJECT</span><span class="meta-val">Operating Systems</span></div>
+        <div class="meta-item"><span class="meta-key">ASSESSMENT</span><span class="meta-val">CA2 — Continuous Assessment 2</span></div>
+        <div class="meta-item"><span class="meta-key">YEAR</span><span class="meta-val">2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">IPC</span>
+        <span class="logo-sub">Visualizer</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="footer-center">
+        <p>Built for the Operating Systems CA2 Project · Inter-Process Communication</p>
+        <p class="footer-copy">© 2025 · All simulations are educational demonstrations</p>
+      </div>
+      <div class="footer-status">
+        <span class="status-dot"></span>
+        <span>Kernel: POSIX-compliant</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
