@@ -407,12 +407,15 @@ body {
   color: var(--text-primary);
   border: 1px solid var(--border-hot);
 }
+
+
 .btn-ghost:hover {
   border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-dim);
   transform: translateY(-2px);
 }
+
 
 .btn-send {
   background: var(--accent);
@@ -421,10 +424,13 @@ body {
   padding: 12px 24px;
   box-shadow: 0 0 20px rgba(0,245,196,0.3);
 }
+
+
 .btn-send:hover {
   box-shadow: 0 0 40px rgba(0,245,196,0.5);
   transform: translateY(-1px);
 }
+
 .btn-clear {
   background: rgba(255,107,107,0.1);
   color: var(--accent-3);
